@@ -10,23 +10,21 @@ var {
   StyleSheet,
   Text,
   View,
+
+  NavigatorIOS,
 } = React;
 
 var ReactAwsApiViewer = React.createClass({
   render: function() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+Control+Z for dev menu
-        </Text>
-      </View>
+      <NavigatorIOS
+        style={styles.natigator}
+        initialRoute={{
+          component: View,
+          title: 'Title',
+        }}
+        tintColor="#4A90C7"
+      />
     );
   }
 });
@@ -38,15 +36,8 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  natigator: {
+    flex: 1,
   },
 });
 
