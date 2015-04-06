@@ -50,7 +50,10 @@ class Menu extends Component {
     this.props.navigator.push({
       title: property.ItemTitle,
       component: property.ItemComponent,
-      passProps: {listings: property.ItemData},
+      passProps: {
+        listings: property.ItemData,
+        url: property.ItemUrl,
+      },
     });
   }
 

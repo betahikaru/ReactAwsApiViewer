@@ -34,7 +34,7 @@ var ReactAwsApiViewer = React.createClass({
                 ItemName: "Users",
                 ItemTitle: "User List",
                 ItemComponent: UserList,
-                ItemData: AwsIamUserList.Users,
+                ItemUrl: "http://localhost:9292/aws/iam/users",
               },
               {
                 ItemName: "Groups",
