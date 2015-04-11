@@ -17,8 +17,9 @@ var {
 } = React;
 
 var styles = StyleSheet.create({
-  container: {
+  indicatorContainer: {
     flex: 1,
+    justifyContent: 'center',
   },
   rowContainer: {
     flexDirection: 'row',
@@ -36,6 +37,10 @@ var styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'Hiragino Kaku Gothic ProN',
     color: '#48BBEC'
+  },
+  loadingText: {
+    fontSize: 14,
+    textAlign: 'center',
   },
 });
 
@@ -83,8 +88,9 @@ class UserList extends Component {
 
   renderLoadingView() {
     return (
-      <View style={styles.container}>
-        <ActivityIndicatorIOS animating={true} size='small' />
+      <View style={styles.indicatorContainer}>
+        <ActivityIndicatorIOS animating={true} size='large' />
+        <Text style={styles.loadingText}>Loading ...</Text>
       </View>
     );
   }
