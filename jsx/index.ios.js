@@ -28,17 +28,17 @@ var ReactAwsApiViewer = React.createClass({
         style={styles.natigator}
         initialRoute={{
           component: Menu,
-          title: 'Menu',
+          title: 'AWS APIs',
           passProps: {listings: [
               {
-                ItemName: "Users",
-                ItemTitle: "User List",
+                ItemName: "IAM Users",
+                ItemTitle: "IAM Users",
                 ItemComponent: UserList,
                 ItemUrl: "http://localhost:9292/aws/iam/users",
               },
               {
-                ItemName: "Groups",
-                ItemTitle: "Group List",
+                ItemName: "IAM Groups",
+                ItemTitle: "IAM Groups",
                 ItemComponent: GroupList,
                 ItemData: AwsIamGroupList.Groups,
               },
