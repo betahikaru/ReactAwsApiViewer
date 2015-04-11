@@ -17,10 +17,15 @@ var {
 var styles = StyleSheet.create({
   rowContainer: {
     flexDirection: 'row',
-    padding: 10,
+    padding: 2,
   },
   textContainer: {
-    flex: 1,
+    padding: 6,
+  },
+  imageContainer: {
+    width: 32,
+    height: 26,
+    padding: 2,
   },
   separator: {
     height: 1,
@@ -32,6 +37,11 @@ var styles = StyleSheet.create({
     fontFamily: 'Hiragino Kaku Gothic ProN',
     color: '#48BBEC'
   },
+  itemimage: {
+    width: 24,
+    height: 24,
+    resizeMode: Image.resizeMode.cover,
+  },
 });
 
 class Menu extends Component {
@@ -42,6 +52,9 @@ class Menu extends Component {
       {rowHasChanged: (r1, r2) => r1.ItemName !== r2.ItemName});
     this.state = {
       dataSource: dataSource.cloneWithRows(this.props.listings)
+    };
+    this.props = {
+      imageName: props.imageName,
     };
   }
 
@@ -64,6 +77,9 @@ class Menu extends Component {
           underlayColor='#dddddd'>
         <View>
           <View style={styles.rowContainer}>
+            <View style={styles.imageContainer}>
+              <Image source={require('image!aws_icon_iam')} style={styles.itemimage} />
+            </View>
             <View style={styles.textContainer}>
               <Text style={styles.itemname}>{rowData.ItemName}</Text>
             </View>
