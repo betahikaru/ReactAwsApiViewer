@@ -1,0 +1,7 @@
+/.bundle
+/vendor
+/Gemfile.lock
+
+.elasticbeanstalk/
+
+.env

@@ -11,10 +11,16 @@ var {
   TouchableHighlight,
   ListView,
   Text,
-  Component
+  Component,
+
+  ActivityIndicatorIOS,
 } = React;
 
 var styles = StyleSheet.create({
+  indicatorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   rowContainer: {
     flexDirection: 'row',
     padding: 10,
@@ -32,6 +38,10 @@ var styles = StyleSheet.create({
     fontFamily: 'Hiragino Kaku Gothic ProN',
     color: '#48BBEC'
   },
+  loadingText: {
+    fontSize: 14,
+    textAlign: 'center',
+  },
 });
 
 class UserList extends Component {
@@ -41,7 +51,11 @@ class UserList extends Component {
     var dataSource = new ListView.DataSource(
       {rowHasChanged: (r1, r2) => r1.UserId !== r2.UserId});
     this.state = {
-      dataSource: dataSource.cloneWithRows(this.props.listings)
+      dataSource: dataSource.cloneWithRows([]),
+      loaded: false,
+    };
+    this.props = {
+      url: ""
     };
   }
 
@@ -62,6 +76,9 @@ class UserList extends Component {
   }
 
   render() {
+    if (!this.state.loaded) {
+      return this.renderLoadingView();
+    }
     return (
       <ListView
         dataSource={this.state.dataSource}
@@ -69,6 +86,31 @@ class UserList extends Component {
     );
   }
 
+  renderLoadingView() {
+    return (
+      <View style={styles.indicatorContainer}>
+        <ActivityIndicatorIOS animating={true} size='large' />
+        <Text style={styles.loadingText}>Loading ...</Text>
+      </View>
+    );
+  }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData() {
+    fetch(this.props.url)
+    .then((response) => response.json())
+    .then((responseData) => {
+      var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+      this.setState({
+        dataSource: ds.cloneWithRows(responseData.Users),
+        loaded: true
+      });
+    })
+    .done();
+  }
 }
 
 module.exports = UserList;

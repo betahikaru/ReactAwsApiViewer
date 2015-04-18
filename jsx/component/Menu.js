@@ -17,10 +17,15 @@ var {
 var styles = StyleSheet.create({
   rowContainer: {
     flexDirection: 'row',
-    padding: 10,
+    padding: 2,
   },
   textContainer: {
-    flex: 1,
+    padding: 6,
+  },
+  imageContainer: {
+    width: 32,
+    height: 26,
+    padding: 2,
   },
   separator: {
     height: 1,
@@ -31,6 +36,11 @@ var styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'Hiragino Kaku Gothic ProN',
     color: '#48BBEC'
+  },
+  itemimage: {
+    width: 24,
+    height: 24,
+    resizeMode: Image.resizeMode.cover,
   },
 });
 
@@ -43,6 +53,9 @@ class Menu extends Component {
     this.state = {
       dataSource: dataSource.cloneWithRows(this.props.listings)
     };
+    this.props = {
+      imageName: props.imageName,
+    };
   }
 
   onItemPressed(item) {
@@ -50,7 +63,10 @@ class Menu extends Component {
     this.props.navigator.push({
       title: property.ItemTitle,
       component: property.ItemComponent,
-      passProps: {listings: property.ItemData},
+      passProps: {
+        listings: property.ItemData,
+        url: property.ItemUrl,
+      },
     });
   }
 
@@ -61,6 +77,9 @@ class Menu extends Component {
           underlayColor='#dddddd'>
         <View>
           <View style={styles.rowContainer}>
+            <View style={styles.imageContainer}>
+              <Image source={require('image!aws_icon_iam')} style={styles.itemimage} />
+            </View>
             <View style={styles.textContainer}>
               <Text style={styles.itemname}>{rowData.ItemName}</Text>
             </View>
