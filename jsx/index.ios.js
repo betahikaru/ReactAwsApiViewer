@@ -14,12 +14,14 @@ var {
   NavigatorIOS,
 } = React;
 
+// Components
 var Menu = require('./component/Menu');
-
-var AwsIamUserList = require('./sample/AwsIamUserList');
 var UserList = require('./component/UserList');
-var AwsIamGroupList = require('./sample/AwsIamGroupList');
 var GroupList = require('./component/GroupList');
+
+// Config
+var ServerConfig = require('../config/ServerConfig');
+var AwsIamGroupList = require('./sample/AwsIamGroupList');
 
 var ReactAwsApiViewer = React.createClass({
   render: function() {
@@ -34,7 +36,7 @@ var ReactAwsApiViewer = React.createClass({
                 ItemName: "IAM Users",
                 ItemTitle: "IAM Users",
                 ItemComponent: UserList,
-                ItemUrl: "http://localhost:9292/aws/iam/users",
+                ItemUrl: ServerConfig.aws_iam_users_url,
               },
               {
                 ItemName: "IAM Groups",
