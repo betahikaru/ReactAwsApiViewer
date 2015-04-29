@@ -64,7 +64,6 @@ class Menu extends Component {
       title: property.ItemTitle,
       component: property.ItemComponent,
       passProps: {
-        listings: property.ItemData,
         url: property.ItemUrl,
       },
     });
