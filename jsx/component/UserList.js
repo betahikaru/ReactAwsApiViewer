@@ -44,6 +44,10 @@ var styles = StyleSheet.create({
   },
 });
 
+// FIXME:
+var GroupList = require('./GroupList');
+var ServerConfig = require('../../config/ServerConfig');
+
 class UserList extends Component {
 
   constructor(props) {
@@ -59,9 +63,21 @@ class UserList extends Component {
     };
   }
 
+  onItemPressed(item) {
+    var url = ServerConfig.aws_iam_user_groups_url.replace("${user_name}", item.UserName);
+    this.props.navigator.push({
+      title: item.UserName,
+      component: GroupList,
+      passProps: {
+        url: url,
+      },
+    });
+  }
+
   renderRow(rowData, sectionID, rowID) {
     return (
       <TouchableHighlight
+          onPress={() => this.onItemPressed(rowData)}
           underlayColor='#dddddd'>
         <View>
           <View style={styles.rowContainer}>
