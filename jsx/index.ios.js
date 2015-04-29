@@ -42,7 +42,7 @@ var ReactAwsApiViewer = React.createClass({
                 ItemName: "IAM Groups",
                 ItemTitle: "IAM Groups",
                 ItemComponent: GroupList,
-                ItemData: AwsIamGroupList.Groups,
+                ItemUrl: ServerConfig.aws_iam_groups_url,
               },
             ]},
         }}
