@@ -14,9 +14,13 @@ var {
   Component,
 
   ActivityIndicatorIOS,
+  AlertIOS,
 } = React;
 
+var EventEmitter = require('EventEmitter');
+
 var BasicAuthUtil = require('../util/BasicAuthUtil');
+var SettingBudleModule = require('NativeModules').SettingBudleModule;
 
 var styles = StyleSheet.create({
   indicatorContainer: {
@@ -114,10 +118,34 @@ class UserList extends Component {
   }
 
   componentDidMount() {
-    this.fetchData();
+    var readSettingEmitter = new EventEmitter();
+    readSettingEmitter.once('ReadSuccessEvent', (valueMap) => {
+      this.fetchData(valueMap);
+    });
+    readSettingEmitter.once('ReadFailedEvent', (errorMessage) => {
+      var okButton = {
+        text: 'OK',
+        onPress: () => this.props.navigator.pop(),
+      };
+      AlertIOS.alert('Setting Error',
+        errorMessage,
+        [
+          okButton,
+        ]
+      );
+    });
+
+    SettingBudleModule.readApiSetting(
+      (valueMap) => {
+        readSettingEmitter.emit('ReadSuccessEvent', valueMap);
+      },
+      (errorMessage) => {
+        readSettingEmitter.emit('ReadFailedEvent', errorMessage);
+      }
+    );
   }
 
-  fetchData() {
+  fetchData(valueMap) {
     var encodedRelm = BasicAuthUtil.generateBasicAuthHeader();
     fetch(this.props.url, {
       headers: {
