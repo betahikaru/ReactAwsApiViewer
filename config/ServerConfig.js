@@ -15,6 +15,10 @@ var ServerConfig =
   "aws_iam_users_url" : Server + "/aws/iam/users" + TestQuery,
   "aws_iam_groups_url" : Server + "/aws/iam/groups" + TestQuery,
   "aws_iam_user_groups_url" : Server + "/aws/iam/users/${user_name}/groups" + TestQuery,
+  "basic_auth" : {
+    "user" : "FILL_ME",
+    "password" : "FILL_ME"
+  }
 };
 
 module.exports = ServerConfig;

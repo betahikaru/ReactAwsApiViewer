@@ -16,6 +16,8 @@ var {
   ActivityIndicatorIOS,
 } = React;
 
+var BasicAuthUtil = require('../util/BasicAuthUtil');
+
 var styles = StyleSheet.create({
   indicatorContainer: {
     flex: 1,
@@ -100,7 +102,12 @@ class GroupList extends Component {
   }
 
   fetchData() {
-    fetch(this.props.url)
+    var encodedRelm = BasicAuthUtil.generateBasicAuthHeader();
+    fetch(this.props.url, {
+      headers: {
+        Authorization: encodedRelm
+      }
+    })
     .then((response) => response.json())
     .then((responseData) => {
       var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
