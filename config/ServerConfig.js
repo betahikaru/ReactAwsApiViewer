@@ -19,6 +19,8 @@ var ServerConfig =
     "user" : "FILL_ME",
     "password" : "FILL_ME"
   }
+  "aws_setting_url" : Server + "/aws/setting",
+  "contact_support" : "Contact to support (@betahikaru).",
 };
 
 module.exports = ServerConfig;
