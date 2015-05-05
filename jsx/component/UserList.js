@@ -19,8 +19,10 @@ var {
 
 var EventEmitter = require('EventEmitter');
 
+var ServerConfig = require('../../config/ServerConfig');
 var BasicAuthUtil = require('../util/BasicAuthUtil');
 var SettingBudleModule = require('NativeModules').SettingBudleModule;
+var GroupList = require('./GroupList'); // FIXME:
 
 var styles = StyleSheet.create({
   indicatorContainer: {
@@ -49,10 +51,6 @@ var styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-// FIXME:
-var GroupList = require('./GroupList');
-var ServerConfig = require('../../config/ServerConfig');
 
 class UserList extends Component {
 
