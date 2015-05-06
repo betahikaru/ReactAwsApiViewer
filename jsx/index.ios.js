@@ -30,7 +30,7 @@ var ReactAwsApiViewer = React.createClass({
         style={styles.natigator}
         initialRoute={{
           component: Menu,
-          title: 'AWS APIs',
+          title: 'Menu',
           passProps: {listings: [
               {
                 ItemName: "IAM Users",
