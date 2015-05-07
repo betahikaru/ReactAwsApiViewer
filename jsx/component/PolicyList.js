@@ -1,5 +1,5 @@
 /**
- * AWS IAM User List Component
+ * AWS IAM Policy List Component
  */
 'use strict';
 
@@ -22,8 +22,6 @@ var EventEmitter = require('EventEmitter');
 var ServerConfig = require('../../config/ServerConfig');
 var BasicAuthUtil = require('../util/BasicAuthUtil');
 var SettingBudleModule = require('NativeModules').SettingBudleModule;
-var GroupList = require('./GroupList'); // FIXME:
-var PolicyList = require('./PolicyList'); // FIXME:
 
 var styles = StyleSheet.create({
   indicatorContainer: {
@@ -41,7 +39,7 @@ var styles = StyleSheet.create({
     height: 1,
     backgroundColor: '#dddddd'
   },
-  username: {
+  name: {
     fontSize: 14,
     fontWeight: 'bold',
     fontFamily: 'Hiragino Kaku Gothic ProN',
@@ -53,12 +51,12 @@ var styles = StyleSheet.create({
   },
 });
 
-class UserList extends Component {
+class PolicyList extends Component {
 
   constructor(props) {
     super(props);
     var dataSource = new ListView.DataSource(
-      {rowHasChanged: (r1, r2) => r1.UserId !== r2.UserId});
+      {rowHasChanged: (r1, r2) => r1.PolicyName !== r2.PolicyName});
     this.state = {
       dataSource: dataSource.cloneWithRows([]),
       loaded: false,
@@ -68,26 +66,14 @@ class UserList extends Component {
     };
   }
 
-  onPolicyPressed(item) {
-    var url = ServerConfig.aws_iam_user_policies_url.replace("${user_name}", item.UserName);
-    this.props.navigator.push({
-      title: item.UserName + "'s Policies",
-      component: PolicyList,
-      passProps: {
-        url: url,
-      },
-    });
-  }
-
   renderRow(rowData, sectionID, rowID) {
     return (
       <TouchableHighlight
-          onPress={() => this.onPolicyPressed(rowData)}
           underlayColor='#dddddd'>
         <View>
           <View style={styles.rowContainer}>
             <View style={styles.textContainer}>
-              <Text style={styles.username}>{rowData.UserName}</Text>
+              <Text style={styles.name}>{rowData.PolicyName}</Text>
             </View>
           </View>
           <View style={styles.separator}/>
@@ -149,7 +135,7 @@ class UserList extends Component {
     /* Register _updateList() */
     var getDataEmitter = new EventEmitter();
     getDataEmitter.once('GetSuccessEvent', (responseData) => {
-      if (!responseData.Users) {
+      if (!responseData) {
         console.log(responseData);
         this.showAlertAndPop('Fetch data Error', responseData.Error)
       } else {
@@ -216,8 +202,8 @@ class UserList extends Component {
   }
 
   _fetchList(getDataEmitter) {
-    var getUsersUrl = this.props.url;
-    fetch(getUsersUrl, {
+    var getPoliciesUrl = this.props.url;
+    fetch(getPoliciesUrl, {
       headers: {
         Authorization: BasicAuthUtil.generateBasicAuthHeader()
       }
@@ -257,11 +243,24 @@ class UserList extends Component {
 
   _updateList(responseData) {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var policyList = [];
+    var userPolicies = responseData.UserPolicies;
+    if (userPolicies) {
+      for (var i=0; i<userPolicies.length; i++) {
+        policyList.push(userPolicies[i]);
+      }
+    }
+    var groupPolicies = responseData.GroupPolicies;
+    if (groupPolicies) {
+      for (var i=0; i<groupPolicies.length; i++) {
+        policyList.push(groupPolicies[i]);
+      }
+    }
     this.setState({
-      dataSource: ds.cloneWithRows(responseData.Users),
+      dataSource: ds.cloneWithRows(policyList),
       loaded: true
     });
   }
 }
 
-module.exports = UserList;
+module.exports = PolicyList;

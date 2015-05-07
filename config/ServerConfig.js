@@ -15,6 +15,8 @@ var ServerConfig =
   "aws_iam_users_url" : Server + "/aws/iam/users" + TestQuery,
   "aws_iam_groups_url" : Server + "/aws/iam/groups" + TestQuery,
   "aws_iam_user_groups_url" : Server + "/aws/iam/users/${user_name}/groups" + TestQuery,
+  "aws_iam_user_policies_url" : Server + "/aws/iam/users/${user_name}/policies" + TestQuery,
+  "aws_iam_group_policies_url" : Server + "/aws/iam/groups/${group_name}/policies" + TestQuery,
   "basic_auth" : {
     "user" : "FILL_ME",
     "password" : "FILL_ME"
