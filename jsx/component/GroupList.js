@@ -22,6 +22,7 @@ var EventEmitter = require('EventEmitter');
 var ServerConfig = require('../../config/ServerConfig');
 var BasicAuthUtil = require('../util/BasicAuthUtil');
 var SettingBudleModule = require('NativeModules').SettingBudleModule;
+var PolicyList = require('./PolicyList'); // FIXME:
 
 var styles = StyleSheet.create({
   indicatorContainer: {
@@ -66,9 +67,21 @@ class GroupList extends Component {
     };
   }
 
+  onPolicyPressed(item) {
+    var url = ServerConfig.aws_iam_group_policies_url.replace("${group_name}", item.GroupName);
+    this.props.navigator.push({
+      title: item.GroupName + "'s Policies",
+      component: PolicyList,
+      passProps: {
+        url: url,
+      },
+    });
+  }
+
   renderRow(rowData, sectionID, rowID) {
     return (
       <TouchableHighlight
+          onPress={() => this.onPolicyPressed(rowData)}
           underlayColor='#dddddd'>
         <View>
           <View style={styles.rowContainer}>
