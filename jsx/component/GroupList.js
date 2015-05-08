@@ -22,29 +22,13 @@ var EventEmitter = require('EventEmitter');
 var ServerConfig = require('../../config/ServerConfig');
 var BasicAuthUtil = require('../util/BasicAuthUtil');
 var SettingBudleModule = require('NativeModules').SettingBudleModule;
+var GroupItem = require('./GroupItem');
 var PolicyList = require('./PolicyList'); // FIXME:
 
 var styles = StyleSheet.create({
   indicatorContainer: {
     flex: 1,
     justifyContent: 'center',
-  },
-  rowContainer: {
-    flexDirection: 'row',
-    padding: 10,
-  },
-  textContainer: {
-    flex: 1,
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#dddddd'
-  },
-  groupname: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    fontFamily: 'Hiragino Kaku Gothic ProN',
-    color: '#48BBEC'
   },
   loadingText: {
     fontSize: 14,
@@ -67,10 +51,10 @@ class GroupList extends Component {
     };
   }
 
-  onPolicyPressed(item) {
-    var url = ServerConfig.aws_iam_group_policies_url.replace("${group_name}", item.GroupName);
+  onPolicyPressed(groupName) {
+    var url = ServerConfig.aws_iam_group_policies_url.replace("${group_name}", groupName);
     this.props.navigator.push({
-      title: item.GroupName + "'s Policies",
+      title: groupName + "'s Policies",
       component: PolicyList,
       passProps: {
         url: url,
@@ -80,18 +64,9 @@ class GroupList extends Component {
 
   renderRow(rowData, sectionID, rowID) {
     return (
-      <TouchableHighlight
-          onPress={() => this.onPolicyPressed(rowData)}
-          underlayColor='#dddddd'>
-        <View>
-          <View style={styles.rowContainer}>
-            <View style={styles.textContainer}>
-              <Text style={styles.groupname}>{rowData.GroupName}</Text>
-            </View>
-          </View>
-          <View style={styles.separator}/>
-        </View>
-      </TouchableHighlight>
+      <GroupItem
+        onPress={this.onPolicyPressed.bind(this)}
+        groupName={rowData.GroupName}/>
     );
   }
 
