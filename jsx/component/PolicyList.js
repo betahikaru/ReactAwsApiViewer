@@ -5,15 +5,8 @@
 
 var React = require('react-native');
 var {
-  StyleSheet,
-  Image,
-  View,
-  TouchableHighlight,
   ListView,
-  Text,
   Component,
-
-  ActivityIndicatorIOS,
   AlertIOS,
 } = React;
 
@@ -22,34 +15,8 @@ var EventEmitter = require('EventEmitter');
 var ServerConfig = require('../../config/ServerConfig');
 var BasicAuthUtil = require('../util/BasicAuthUtil');
 var SettingBudleModule = require('NativeModules').SettingBudleModule;
-
-var styles = StyleSheet.create({
-  indicatorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  rowContainer: {
-    flexDirection: 'row',
-    padding: 10,
-  },
-  textContainer: {
-    flex: 1,
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#dddddd'
-  },
-  name: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    fontFamily: 'Hiragino Kaku Gothic ProN',
-    color: '#48BBEC'
-  },
-  loadingText: {
-    fontSize: 14,
-    textAlign: 'center',
-  },
-});
+var Indicator = require('./Indicator');
+var PolicyItem = require('./PolicyItem');
 
 class PolicyList extends Component {
 
@@ -68,37 +35,22 @@ class PolicyList extends Component {
 
   renderRow(rowData, sectionID, rowID) {
     return (
-      <TouchableHighlight
-          underlayColor='#dddddd'>
-        <View>
-          <View style={styles.rowContainer}>
-            <View style={styles.textContainer}>
-              <Text style={styles.name}>{rowData.PolicyName}</Text>
-            </View>
-          </View>
-          <View style={styles.separator}/>
-        </View>
-      </TouchableHighlight>
+      <PolicyItem
+        onPress={() => {}}
+        policyName={rowData.PolicyName}/>
     );
   }
 
   render() {
     if (!this.state.loaded) {
-      return this.renderLoadingView();
+      return (
+        <Indicator />
+      );
     }
     return (
       <ListView
         dataSource={this.state.dataSource}
         renderRow={this.renderRow.bind(this)}/>
-    );
-  }
-
-  renderLoadingView() {
-    return (
-      <View style={styles.indicatorContainer}>
-        <ActivityIndicatorIOS animating={true} size='large' />
-        <Text style={styles.loadingText}>Loading ...</Text>
-      </View>
     );
   }
 

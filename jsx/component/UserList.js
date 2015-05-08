@@ -5,15 +5,8 @@
 
 var React = require('react-native');
 var {
-  StyleSheet,
-  Image,
-  View,
-  TouchableHighlight,
   ListView,
-  Text,
   Component,
-
-  ActivityIndicatorIOS,
   AlertIOS,
 } = React;
 
@@ -22,36 +15,10 @@ var EventEmitter = require('EventEmitter');
 var ServerConfig = require('../../config/ServerConfig');
 var BasicAuthUtil = require('../util/BasicAuthUtil');
 var SettingBudleModule = require('NativeModules').SettingBudleModule;
+var Indicator = require('./Indicator');
+var UserItem = require('./UserItem');
 var GroupList = require('./GroupList'); // FIXME:
 var PolicyList = require('./PolicyList'); // FIXME:
-
-var styles = StyleSheet.create({
-  indicatorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  rowContainer: {
-    flexDirection: 'row',
-    padding: 10,
-  },
-  textContainer: {
-    flex: 1,
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#dddddd'
-  },
-  username: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    fontFamily: 'Hiragino Kaku Gothic ProN',
-    color: '#48BBEC'
-  },
-  loadingText: {
-    fontSize: 14,
-    textAlign: 'center',
-  },
-});
 
 class UserList extends Component {
 
@@ -68,10 +35,10 @@ class UserList extends Component {
     };
   }
 
-  onPolicyPressed(item) {
-    var url = ServerConfig.aws_iam_user_policies_url.replace("${user_name}", item.UserName);
+  onPolicyPressed(userName) {
+    var url = ServerConfig.aws_iam_user_policies_url.replace("${user_name}", userName);
     this.props.navigator.push({
-      title: item.UserName + "'s Policies",
+      title: userName + "'s Policies",
       component: PolicyList,
       passProps: {
         url: url,
@@ -81,38 +48,22 @@ class UserList extends Component {
 
   renderRow(rowData, sectionID, rowID) {
     return (
-      <TouchableHighlight
-          onPress={() => this.onPolicyPressed(rowData)}
-          underlayColor='#dddddd'>
-        <View>
-          <View style={styles.rowContainer}>
-            <View style={styles.textContainer}>
-              <Text style={styles.username}>{rowData.UserName}</Text>
-            </View>
-          </View>
-          <View style={styles.separator}/>
-        </View>
-      </TouchableHighlight>
+      <UserItem
+        onPress={this.onPolicyPressed.bind(this)}
+        userName={rowData.UserName}/>
     );
   }
 
   render() {
     if (!this.state.loaded) {
-      return this.renderLoadingView();
+      return (
+        <Indicator />
+      );
     }
     return (
       <ListView
         dataSource={this.state.dataSource}
         renderRow={this.renderRow.bind(this)}/>
-    );
-  }
-
-  renderLoadingView() {
-    return (
-      <View style={styles.indicatorContainer}>
-        <ActivityIndicatorIOS animating={true} size='large' />
-        <Text style={styles.loadingText}>Loading ...</Text>
-      </View>
     );
   }
 
