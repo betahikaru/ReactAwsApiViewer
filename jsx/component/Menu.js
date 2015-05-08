@@ -5,44 +5,11 @@
 
 var React = require('react-native');
 var {
-  StyleSheet,
-  Image,
-  View,
-  TouchableHighlight,
   ListView,
-  Text,
   Component
 } = React;
 
-var styles = StyleSheet.create({
-  rowContainer: {
-    flexDirection: 'row',
-    padding: 2,
-  },
-  textContainer: {
-    padding: 6,
-  },
-  imageContainer: {
-    width: 32,
-    height: 26,
-    padding: 2,
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#dddddd'
-  },
-  itemname: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    fontFamily: 'Hiragino Kaku Gothic ProN',
-    color: '#48BBEC'
-  },
-  itemimage: {
-    width: 24,
-    height: 24,
-    resizeMode: Image.resizeMode.cover,
-  },
-});
+var MenuItem = require('./MenuItem');
 
 class Menu extends Component {
 
@@ -54,12 +21,11 @@ class Menu extends Component {
       dataSource: dataSource.cloneWithRows(this.props.listings)
     };
     this.props = {
-      imageName: props.imageName,
     };
   }
 
-  onItemPressed(item) {
-    var property = this.props.listings.filter(prop => prop.ItemName === item.ItemName)[0];
+  onItemPressed(itemName) {
+    var property = this.props.listings.filter(prop => prop.ItemName === itemName)[0];
     this.props.navigator.push({
       title: property.ItemTitle,
       component: property.ItemComponent,
@@ -71,21 +37,10 @@ class Menu extends Component {
 
   renderRow(rowData, sectionID, rowID) {
     return (
-      <TouchableHighlight
-          onPress={() => this.onItemPressed(rowData)}
-          underlayColor='#dddddd'>
-        <View>
-          <View style={styles.rowContainer}>
-            <View style={styles.imageContainer}>
-              <Image source={require('image!aws_icon_iam')} style={styles.itemimage} />
-            </View>
-            <View style={styles.textContainer}>
-              <Text style={styles.itemname}>{rowData.ItemName}</Text>
-            </View>
-          </View>
-          <View style={styles.separator}/>
-        </View>
-      </TouchableHighlight>
+      <MenuItem
+        onPress={this.onItemPressed.bind(this)}
+        itemName={rowData.ItemName}
+        imageIcon={require('image!aws_icon_iam')}/>
     );
   }
 
