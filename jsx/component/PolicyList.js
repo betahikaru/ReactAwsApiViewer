@@ -22,28 +22,12 @@ var EventEmitter = require('EventEmitter');
 var ServerConfig = require('../../config/ServerConfig');
 var BasicAuthUtil = require('../util/BasicAuthUtil');
 var SettingBudleModule = require('NativeModules').SettingBudleModule;
+var PolicyItem = require('./PolicyItem');
 
 var styles = StyleSheet.create({
   indicatorContainer: {
     flex: 1,
     justifyContent: 'center',
-  },
-  rowContainer: {
-    flexDirection: 'row',
-    padding: 10,
-  },
-  textContainer: {
-    flex: 1,
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#dddddd'
-  },
-  name: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    fontFamily: 'Hiragino Kaku Gothic ProN',
-    color: '#48BBEC'
   },
   loadingText: {
     fontSize: 14,
@@ -68,17 +52,9 @@ class PolicyList extends Component {
 
   renderRow(rowData, sectionID, rowID) {
     return (
-      <TouchableHighlight
-          underlayColor='#dddddd'>
-        <View>
-          <View style={styles.rowContainer}>
-            <View style={styles.textContainer}>
-              <Text style={styles.name}>{rowData.PolicyName}</Text>
-            </View>
-          </View>
-          <View style={styles.separator}/>
-        </View>
-      </TouchableHighlight>
+      <PolicyItem
+        onPress={() => {}}
+        policyName={rowData.PolicyName}/>
     );
   }
 
