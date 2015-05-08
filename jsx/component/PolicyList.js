@@ -5,15 +5,8 @@
 
 var React = require('react-native');
 var {
-  StyleSheet,
-  Image,
-  View,
-  TouchableHighlight,
   ListView,
-  Text,
   Component,
-
-  ActivityIndicatorIOS,
   AlertIOS,
 } = React;
 
@@ -22,18 +15,8 @@ var EventEmitter = require('EventEmitter');
 var ServerConfig = require('../../config/ServerConfig');
 var BasicAuthUtil = require('../util/BasicAuthUtil');
 var SettingBudleModule = require('NativeModules').SettingBudleModule;
+var Indicator = require('./Indicator');
 var PolicyItem = require('./PolicyItem');
-
-var styles = StyleSheet.create({
-  indicatorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  loadingText: {
-    fontSize: 14,
-    textAlign: 'center',
-  },
-});
 
 class PolicyList extends Component {
 
@@ -60,21 +43,14 @@ class PolicyList extends Component {
 
   render() {
     if (!this.state.loaded) {
-      return this.renderLoadingView();
+      return (
+        <Indicator />
+      );
     }
     return (
       <ListView
         dataSource={this.state.dataSource}
         renderRow={this.renderRow.bind(this)}/>
-    );
-  }
-
-  renderLoadingView() {
-    return (
-      <View style={styles.indicatorContainer}>
-        <ActivityIndicatorIOS animating={true} size='large' />
-        <Text style={styles.loadingText}>Loading ...</Text>
-      </View>
     );
   }
 

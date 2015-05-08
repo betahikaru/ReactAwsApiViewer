@@ -5,15 +5,8 @@
 
 var React = require('react-native');
 var {
-  StyleSheet,
-  Image,
-  View,
-  TouchableHighlight,
   ListView,
-  Text,
   Component,
-
-  ActivityIndicatorIOS,
   AlertIOS,
 } = React;
 
@@ -22,19 +15,9 @@ var EventEmitter = require('EventEmitter');
 var ServerConfig = require('../../config/ServerConfig');
 var BasicAuthUtil = require('../util/BasicAuthUtil');
 var SettingBudleModule = require('NativeModules').SettingBudleModule;
+var Indicator = require('./Indicator');
 var GroupItem = require('./GroupItem');
 var PolicyList = require('./PolicyList'); // FIXME:
-
-var styles = StyleSheet.create({
-  indicatorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  loadingText: {
-    fontSize: 14,
-    textAlign: 'center',
-  },
-});
 
 class GroupList extends Component {
 
@@ -72,7 +55,9 @@ class GroupList extends Component {
 
   render() {
     if (!this.state.loaded) {
-      return this.renderLoadingView();
+      return (
+        <Indicator />
+      );
     }
     return (
       <ListView
@@ -80,37 +65,6 @@ class GroupList extends Component {
         renderRow={this.renderRow.bind(this)}/>
     );
   }
-
-  renderLoadingView() {
-    return (
-      <View style={styles.indicatorContainer}>
-        <ActivityIndicatorIOS animating={true} size='large' />
-        <Text style={styles.loadingText}>Loading ...</Text>
-      </View>
-    );
-  }
-
-  // componentDidMount() {
-  //   this.fetchData();
-  // }
-
-  // fetchData() {
-  //   var encodedRelm = BasicAuthUtil.generateBasicAuthHeader();
-  //   fetch(this.props.url, {
-  //     headers: {
-  //       Authorization: encodedRelm
-  //     }
-  //   })
-  //   .then((response) => response.json())
-  //   .then((responseData) => {
-  //     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-  //     this.setState({
-  //       dataSource: ds.cloneWithRows(responseData.Groups),
-  //       loaded: true
-  //     });
-  //   })
-  //   .done();
-  // }
 
   showAlertAndPop(alertTitle, errorMessage) {
     AlertIOS.alert(alertTitle, errorMessage, [{
