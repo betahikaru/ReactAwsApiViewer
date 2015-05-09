@@ -8,9 +8,8 @@ var {
   ListView,
   Component,
   AlertIOS,
+  NativeModules,
 } = React;
-
-var NativeModules = require('NativeModules');
 var {
   SettingBudleModule,
   OpenSettingAppModule,
