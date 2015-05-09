@@ -22,6 +22,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		BC7268A31AFDB02A00A7C07C /* OpenSettingAppModule.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7268A21AFDB02A00A7C07C /* OpenSettingAppModule.m */; };
 		BC76ABB31AF4BBB300F22FB8 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC76ABB21AF4BBB300F22FB8 /* Settings.bundle */; };
 		BC76ABBF1AF4C5CB00F22FB8 /* SettingBudleModule.m in Sources */ = {isa = PBXBuildFile; fileRef = BC76ABBE1AF4C5CB00F22FB8 /* SettingBudleModule.m */; };
 /* End PBXBuildFile section */
@@ -111,6 +112,8 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = iOS/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		BC7268A11AFDB02A00A7C07C /* OpenSettingAppModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenSettingAppModule.h; path = iOS/OpenSettingAppModule.h; sourceTree = "<group>"; };
+		BC7268A21AFDB02A00A7C07C /* OpenSettingAppModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenSettingAppModule.m; path = iOS/OpenSettingAppModule.m; sourceTree = "<group>"; };
 		BC76ABB21AF4BBB300F22FB8 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = iOS/Settings.bundle; sourceTree = "<group>"; };
 		BC76ABBD1AF4C5CB00F22FB8 /* SettingBudleModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingBudleModule.h; path = iOS/SettingBudleModule.h; sourceTree = "<group>"; };
 		BC76ABBE1AF4C5CB00F22FB8 /* SettingBudleModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingBudleModule.m; path = iOS/SettingBudleModule.m; sourceTree = "<group>"; };
@@ -205,6 +208,8 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				BC76ABBD1AF4C5CB00F22FB8 /* SettingBudleModule.h */,
 				BC76ABBE1AF4C5CB00F22FB8 /* SettingBudleModule.m */,
+				BC7268A11AFDB02A00A7C07C /* OpenSettingAppModule.h */,
+				BC7268A21AFDB02A00A7C07C /* OpenSettingAppModule.m */,
 			);
 			name = ReactAwsApiViewer;
 			sourceTree = "<group>";
@@ -432,6 +437,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC7268A31AFDB02A00A7C07C /* OpenSettingAppModule.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				BC76ABBF1AF4C5CB00F22FB8 /* SettingBudleModule.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,

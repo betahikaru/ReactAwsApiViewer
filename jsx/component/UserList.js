@@ -10,11 +10,16 @@ var {
   AlertIOS,
 } = React;
 
+var NativeModules = require('NativeModules');
+var {
+  SettingBudleModule,
+  OpenSettingAppModule,
+} = NativeModules;
+
 var EventEmitter = require('EventEmitter');
 
 var ServerConfig = require('../../config/ServerConfig');
 var BasicAuthUtil = require('../util/BasicAuthUtil');
-var SettingBudleModule = require('NativeModules').SettingBudleModule;
 var Indicator = require('./Indicator');
 var UserItem = require('./UserItem');
 var GroupList = require('./GroupList'); // FIXME:
@@ -74,13 +79,45 @@ class UserList extends Component {
     }]);
   }
 
+  showAlertAndPopWithJumpSettingsButton(alertTitle, errorMessage) {
+    AlertIOS.alert(alertTitle, errorMessage, [
+      {
+        text: 'OK',
+        onPress: () => this.props.navigator.pop(),
+      },
+      {
+        text: 'Setting',
+        onPress: () => {
+          OpenSettingAppModule.openSettingsApp(
+            (result) => {
+              this.props.navigator.pop();
+            }
+          );
+        },
+      }
+    ]);
+  }
+
+  onBadSettings(alertTitle, errorMessage) {
+    OpenSettingAppModule.canOpenSettingsApp(
+      (canOpen, iosVersion) => {
+        console.log(iosVersion);
+        if (canOpen) {
+          this.showAlertAndPopWithJumpSettingsButton(alertTitle, errorMessage);
+        } else {
+          this.showAlertAndPop(alertTitle, errorMessage);
+        }
+      }
+    );
+  }
+
   componentDidMount() {
     var readSettingEmitter = new EventEmitter();
     readSettingEmitter.once('ReadSuccessEvent', (keyValues) => {
       this.fetchData(keyValues);
     });
     readSettingEmitter.once('ReadFailedEvent', (alertTitle, errorMessage) => {
-      this.showAlertAndPop(alertTitle, errorMessage)
+      this.onBadSettings(alertTitle, errorMessage);
     });
     this._readApiSetting(readSettingEmitter);
   }
