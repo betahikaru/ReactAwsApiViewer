@@ -23,14 +23,16 @@ class PolicyList extends FetchedList {
     var list = [];
     var userPolicies = responseData.UserPolicies;
     if (userPolicies) {
-      for (var policy of userPolicies) {
+      for (var i=0; i<userPolicies.length; i++) {
+        var policy = userPolicies[i];
         policy.sortKey = policy.PolicyName;
         list.push(policy);
       }
     }
     var groupPolicies = responseData.GroupPolicies;
     if (groupPolicies) {
-      for (var policy of groupPolicies) {
+      for (var i=0; i<groupPolicies.length; i++) {
+        var policy = groupPolicies[i];
         policy.sortKey = policy.PolicyName;
         list.push(policy);
       }
