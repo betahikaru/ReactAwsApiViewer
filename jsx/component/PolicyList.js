@@ -12,11 +12,27 @@ var PolicyItem = require('./PolicyItem');
 class PolicyList extends FetchedList {
 
   renderRow(rowData, sectionID, rowID) {
-    return (
-      <PolicyItem
-        onPress={() => {}}
-        policyName={rowData.PolicyName}/>
-    );
+    if (rowData.PolicyDocument) {
+      return (
+        <PolicyItem
+          onPress={() => {}}
+          policyDocument={rowData.PolicyDocument}
+          policyName={rowData.PolicyName}/>
+      );
+    } else if (rowData.PolicyArn) {
+      return (
+        <PolicyItem
+          onPress={() => {}}
+          policyArn={rowData.PolicyArn}
+          policyName={rowData.PolicyName}/>
+      );
+    } else {
+      return (
+        <PolicyItem
+          onPress={() => {}}
+          policyName={rowData.PolicyName}/>
+      );
+    }
   }
 
   updateList(responseData, dataSource) {

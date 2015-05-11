@@ -30,6 +30,14 @@ var styles = StyleSheet.create({
     fontFamily: 'Hiragino Kaku Gothic ProN',
     color: '#48BBEC'
   },
+  arn: {
+    fontSize: 14,
+    color: '#333222'
+  },
+  doc: {
+    fontSize: 12,
+    color: '#222222'
+  },
 });
 
 class PolicyItem extends Component {
@@ -38,12 +46,30 @@ class PolicyItem extends Component {
     super(props);
     this.props = {
       onPress: props.onPress,
+      policyArn: props.policyArn,
+      policyDocument: props.policyDocument,
       policyName: props.policyName,
     };
   }
 
   render() {
     var policyName = this.props.policyName;
+    var detailView;
+    if (this.props.policyArn) {
+      detailView = (
+        <Text style={styles.arn}>{this.props.policyArn}</Text>
+      );
+    } else if (this.props.policyDocument) {
+      var doc = this.props.policyDocument;
+      var decodedDoc = decodeURIComponent(doc);
+      detailView = (
+        <Text style={styles.doc}>{decodedDoc}</Text>
+      );
+    } else {
+      detailView = (
+        <Text></Text>
+      );
+    }
     return (
       <TouchableHighlight
           underlayColor='#dddddd'>
@@ -51,6 +77,7 @@ class PolicyItem extends Component {
           <View style={styles.rowContainer}>
             <View style={styles.textContainer}>
               <Text style={styles.name}>{policyName}</Text>
+              {detailView}
             </View>
           </View>
           <View style={styles.separator}/>
