@@ -37,7 +37,8 @@ class GroupList extends FetchedList {
   updateList(responseData, dataSource) {
     var list = [];
     var groups = responseData.Groups;
-    for (var group of groups) {
+    for (var i=0; i<groups.length; i++) {
+      var group = groups[i];
       group.sortKey = group.GroupName;
       list.push(group);
     }

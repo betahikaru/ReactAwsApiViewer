@@ -37,7 +37,8 @@ class UserList extends FetchedList {
   updateList(responseData, dataSource) {
     var list = [];
     var users = responseData.Users;
-    for (var user of users) {
+    for (var i=0; i<users.length; i++) {
+      var user = users[i]
       user.sortKey = user.Username;
       list.push(user);
     }
