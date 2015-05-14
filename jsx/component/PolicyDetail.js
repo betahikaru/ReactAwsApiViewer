@@ -7,19 +7,16 @@ var React = require('react-native');
 var {
   StyleSheet,
   View,
+  ScrollView,
   Text,
   TextInput,
   Component,
 } = React;
 
 var styles = StyleSheet.create({
-  rootContainer: {
-    paddingTop: 80,
-  },
   textContainer: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#AAAAAA'
   },
   doc: {
     fontSize: 12,
@@ -44,11 +41,13 @@ class PolicyDetail extends Component {
     if (doc) {
       var decodedDoc = decodeURIComponent(doc);
       return (
-        <View style={styles.rootContainer}>
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          bounces={true}>
           <View style={styles.textContainer}>
             <Text style={styles.doc}>{decodedDoc}</Text>
           </View>
-        </View>
+        </ScrollView>
       );
     }
   }
