@@ -17,8 +17,16 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 10,
   },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+  },
   textContainer: {
     flex: 1,
+  },
+  iconContainer: {
+    width: 16,
+    height: 16,
   },
   separator: {
     height: 1,
@@ -26,9 +34,22 @@ var styles = StyleSheet.create({
   },
   name: {
     fontSize: 14,
-    fontWeight: 'bold',
     fontFamily: 'Hiragino Kaku Gothic ProN',
+    color: '#111111'
+  },
+  tappableName: {
+    fontSize: 14,
+    fontFamily: 'Hiragino Kaku Gothic ProN',
+    fontWeight: 'bold',
     color: '#48BBEC'
+  },
+  kind: {
+    fontSize: 12,
+    color: '#999999'
+  },
+  value: {
+    fontSize: 12,
+    color: '#333222'
   },
 });
 
@@ -39,19 +60,60 @@ class PolicyItem extends Component {
     this.props = {
       onPress: props.onPress,
       policyName: props.policyName,
+      policyArn: props.policyArn,
+      policyDocument: props.policyDocument,
     };
   }
 
   render() {
     var policyName = this.props.policyName;
+    if (this.props.policyArn) {
+      var nameView = (
+        <View style={styles.textContainer}>
+          <Text style={styles.name}>{policyName}</Text>
+          <View style={styles.row}>
+            <View style={{flex: 1}}></View>
+            <View style={{flex: 1}}>
+              <Text style={styles.kind}>{"Type "}</Text>
+            </View>
+            <View style={{flex: 8}}>
+              <Text style={styles.value}>{"Managed Policy"}</Text>
+            </View>
+          </View>
+          <View style={styles.row}>
+            <View style={{flex: 1}}></View>
+            <View style={{flex: 1}}>
+              <Text style={styles.kind}>{"Arn "}</Text>
+            </View>
+            <View style={{flex: 8}}>
+              <Text style={styles.value}>{this.props.policyArn}</Text>
+            </View>
+          </View>
+        </View>
+      );
+    } else {
+      var nameView = (
+        <View style={styles.textContainer}>
+          <Text style={styles.tappableName}>{policyName}</Text>
+          <View style={styles.row}>
+            <View style={{flex: 1}}></View>
+            <View style={{flex: 1}}>
+              <Text style={styles.kind}>{"Type "}</Text>
+            </View>
+            <View style={{flex: 8}}>
+              <Text style={styles.value}>{"Inline Policy"}</Text>
+            </View>
+          </View>
+        </View>
+      );
+    }
     return (
       <TouchableHighlight
+          onPress={() => this.props.onPress(policyName, this.props.policyArn, this.props.policyDocument)}
           underlayColor='#dddddd'>
         <View>
           <View style={styles.rowContainer}>
-            <View style={styles.textContainer}>
-              <Text style={styles.name}>{policyName}</Text>
-            </View>
+            {nameView}
           </View>
           <View style={styles.separator}/>
         </View>
