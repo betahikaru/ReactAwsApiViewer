@@ -17,8 +17,16 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 10,
   },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+  },
   textContainer: {
     flex: 1,
+  },
+  iconContainer: {
+    width: 16,
+    height: 16,
   },
   separator: {
     height: 1,
@@ -26,11 +34,25 @@ var styles = StyleSheet.create({
   },
   name: {
     fontSize: 14,
-    fontWeight: 'bold',
     fontFamily: 'Hiragino Kaku Gothic ProN',
+    color: '#111111'
+  },
+  tappableName: {
+    fontSize: 14,
+    fontFamily: 'Hiragino Kaku Gothic ProN',
+    fontWeight: 'bold',
     color: '#48BBEC'
   },
-  arn: {
+  kind: {
+    fontSize: 12,
+    padding: 2,
+    color: '#999999'
+  },
+  value: {
+    fontSize: 14,
+    color: '#333222'
+  },
+  arrow: {
     fontSize: 14,
     color: '#333222'
   },
@@ -51,12 +73,40 @@ class PolicyItem extends Component {
   render() {
     var policyName = this.props.policyName;
     if (this.props.policyArn) {
-      var detailView = (
-        <Text style={styles.arn}>{this.props.policyArn}</Text>
+      var nameView = (
+        <View style={styles.textContainer}>
+          <Text style={styles.name}>{policyName}</Text>
+          <View style={styles.row}>
+            <View style={{flex: 1}}>
+              <Text style={styles.kind}>{"Type: "}</Text>
+            </View>
+            <View style={{flex: 9}}>
+              <Text style={styles.value}>{"Managed Policy"}</Text>
+            </View>
+          </View>
+          <View style={styles.row}>
+            <View style={{flex: 1}}>
+              <Text style={styles.kind}>{"Arn: "}</Text>
+            </View>
+            <View style={{flex: 9}}>
+              <Text style={styles.value}>{this.props.policyArn}</Text>
+            </View>
+          </View>
+        </View>
       );
     } else {
-      var detailView = (
-        <Text style={styles.arn}>-</Text>
+      var nameView = (
+        <View style={styles.textContainer}>
+          <Text style={styles.tappableName}>{policyName}</Text>
+          <View style={styles.row}>
+            <View style={{flex: 1}}>
+              <Text style={styles.kind}>{"Type: "}</Text>
+            </View>
+            <View style={{flex: 9}}>
+              <Text style={styles.value}>{"Inline Policy"}</Text>
+            </View>
+          </View>
+        </View>
       );
     }
     return (
@@ -65,10 +115,7 @@ class PolicyItem extends Component {
           underlayColor='#dddddd'>
         <View>
           <View style={styles.rowContainer}>
-            <View style={styles.textContainer}>
-              <Text style={styles.name}>{policyName}</Text>
-              {detailView}
-            </View>
+            {nameView}
           </View>
           <View style={styles.separator}/>
         </View>
