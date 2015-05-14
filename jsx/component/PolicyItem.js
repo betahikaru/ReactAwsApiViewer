@@ -45,15 +45,10 @@ var styles = StyleSheet.create({
   },
   kind: {
     fontSize: 12,
-    padding: 2,
     color: '#999999'
   },
   value: {
-    fontSize: 14,
-    color: '#333222'
-  },
-  arrow: {
-    fontSize: 14,
+    fontSize: 12,
     color: '#333222'
   },
 });
@@ -77,18 +72,20 @@ class PolicyItem extends Component {
         <View style={styles.textContainer}>
           <Text style={styles.name}>{policyName}</Text>
           <View style={styles.row}>
+            <View style={{flex: 1}}></View>
             <View style={{flex: 1}}>
-              <Text style={styles.kind}>{"Type: "}</Text>
+              <Text style={styles.kind}>{"Type "}</Text>
             </View>
-            <View style={{flex: 9}}>
+            <View style={{flex: 8}}>
               <Text style={styles.value}>{"Managed Policy"}</Text>
             </View>
           </View>
           <View style={styles.row}>
+            <View style={{flex: 1}}></View>
             <View style={{flex: 1}}>
-              <Text style={styles.kind}>{"Arn: "}</Text>
+              <Text style={styles.kind}>{"Arn "}</Text>
             </View>
-            <View style={{flex: 9}}>
+            <View style={{flex: 8}}>
               <Text style={styles.value}>{this.props.policyArn}</Text>
             </View>
           </View>
@@ -99,10 +96,11 @@ class PolicyItem extends Component {
         <View style={styles.textContainer}>
           <Text style={styles.tappableName}>{policyName}</Text>
           <View style={styles.row}>
+            <View style={{flex: 1}}></View>
             <View style={{flex: 1}}>
-              <Text style={styles.kind}>{"Type: "}</Text>
+              <Text style={styles.kind}>{"Type "}</Text>
             </View>
-            <View style={{flex: 9}}>
+            <View style={{flex: 8}}>
               <Text style={styles.value}>{"Inline Policy"}</Text>
             </View>
           </View>
