@@ -34,10 +34,6 @@ var styles = StyleSheet.create({
     fontSize: 14,
     color: '#333222'
   },
-  doc: {
-    fontSize: 12,
-    color: '#222222'
-  },
 });
 
 class PolicyItem extends Component {
@@ -46,32 +42,26 @@ class PolicyItem extends Component {
     super(props);
     this.props = {
       onPress: props.onPress,
+      policyName: props.policyName,
       policyArn: props.policyArn,
       policyDocument: props.policyDocument,
-      policyName: props.policyName,
     };
   }
 
   render() {
     var policyName = this.props.policyName;
-    var detailView;
     if (this.props.policyArn) {
-      detailView = (
+      var detailView = (
         <Text style={styles.arn}>{this.props.policyArn}</Text>
       );
-    } else if (this.props.policyDocument) {
-      var doc = this.props.policyDocument;
-      var decodedDoc = decodeURIComponent(doc);
-      detailView = (
-        <Text style={styles.doc}>{decodedDoc}</Text>
-      );
     } else {
-      detailView = (
-        <Text></Text>
+      var detailView = (
+        <Text style={styles.arn}>-</Text>
       );
     }
     return (
       <TouchableHighlight
+          onPress={() => this.props.onPress(policyName, this.props.policyArn, this.props.policyDocument)}
           underlayColor='#dddddd'>
         <View>
           <View style={styles.rowContainer}>

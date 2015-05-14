@@ -8,6 +8,7 @@ var React = require('react-native');
 // Components
 var FetchedList = require('./FetchedList');
 var PolicyItem = require('./PolicyItem');
+var PolicyDetail = require('./PolicyDetail');
 
 class PolicyList extends FetchedList {
 
@@ -15,23 +16,38 @@ class PolicyList extends FetchedList {
     if (rowData.PolicyDocument) {
       return (
         <PolicyItem
-          onPress={() => {}}
+          onPress={this._onPress.bind(this)}
           policyDocument={rowData.PolicyDocument}
           policyName={rowData.PolicyName}/>
       );
     } else if (rowData.PolicyArn) {
       return (
         <PolicyItem
-          onPress={() => {}}
+          onPress={this._onPress.bind(this)}
           policyArn={rowData.PolicyArn}
           policyName={rowData.PolicyName}/>
       );
     } else {
       return (
         <PolicyItem
-          onPress={() => {}}
+          onPress={this._onPress.bind(this)}
           policyName={rowData.PolicyName}/>
       );
+    }
+  }
+
+  _onPress(policyName, arn, doc) {
+    console.log("_onPress");
+    if (doc) {
+      this.props.navigator.push({
+        title: policyName,
+        component: PolicyDetail,
+        passProps: {
+          policyName: policyName,
+          policyArn: arn,
+          policyDocument: doc,
+        },
+      });
     }
   }
 
